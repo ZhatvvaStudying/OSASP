@@ -10,6 +10,8 @@ else
     then
         echo "$dirPath isn't a directory"
     else
-        grep -rl "$inpStr" "$dirPath" | xargs -d '\n' ls -lSr | awk '{print $5,$9}'      
+       grep -rl "$inpStr" "$dirPath" | xargs -d '\n' ls -lSr | awk '{print $5,$9}'
+       #find "$dirPath" -exec grep -rl "$inpStr" {} \; | xargs -d '\n' ls -lSr | awk '{print $5,$9}'  
+       #find "$dirPath" \( grep "$inpStr" {} \) | xargs -d '\n' ls -lSr | awk '{print $5,$9}'   
     fi
 fi
