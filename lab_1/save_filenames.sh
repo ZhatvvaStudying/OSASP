@@ -11,6 +11,6 @@ else
     then 
         echo "$inputDir isn't a directory" >&2
     else
-        find "$inputDir" f -name "*.$fileExtension" | sort -f > "$outputFile" 
+        find "$inputDir" -name "*.$fileExtension" | sort -f > "$outputFile" 
     fi
 fi
