@@ -9,7 +9,7 @@ else
     if ! [ -d "$dirPath" ]
     then
         echo "$dirPath isn't a directory"
-    else
-       find "$dirPath" -type f -exec grep -l "$inpStr" {} \; -exec wc -c {} \; | sort -n | grep ^[0-9]   
+    else 
+       find "$dirPath" -type f -exec grep -lq "$inpStr" {} \; -exec stat -c "%s %n" {} \; | sort -n  
     fi
 fi
