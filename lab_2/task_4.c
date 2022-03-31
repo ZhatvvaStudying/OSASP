@@ -1,71 +1,65 @@
 #include <stdio.h>
-#include <fcntl.h>
-#include <string.h>
 #include <stdlib.h>
 
-//ctrl+F to close
-const int StopSymb = 6;
-
-int PrintBlock(FILE *file, int linesCount)
+int PrintStr(FILE *inputFile, FILE *outputFile)
 {
-    int symb = getc(file), line = 0;
-    while (symb != EOF && (linesCount == 0 || line < linesCount))
+    int ch = getc(inputFile);
+    while (ch != EOF && ch != '\n') 
     {
-        if (putc(symb, stdout) == EOF)
+        if (putc(ch, outputFile) == EOF)
         {
-            perror("Cannot put char into stdout");
             return EOF;
         }
-        if (symb == '\n')
-        {
-            ++line;
-        }
-        if (linesCount == 0 || line < linesCount)
-        {
-            symb = getc(file);
-        }
+        ch = getc(inputFile);
     }
-    return symb == EOF ? symb : getc(stdin);
+    if (ch == '\n' && putc(ch, outputFile) == EOF)
+    {
+        return EOF;
+    }
+    return ch;
 }
 
 int main(int argc, char *argv[])
 {
-    if (argc != 3)
+    if (argc != 3) 
     {
-        perror("Error! Invalid operands count!\n1-file name, 2-strings count");
+        fprintf(stderr, "Error! Invalid operands count!\n\t1 - input file's name\n\t2 - output group size\n");
         return -1;
     }
-    int linesCount;
-    char **error;
-    if ((linesCount = strtol(argv[2], error, 10)) == 0)
+    int groupSize = atoi(argv[2]);
+    if (groupSize < 0) 
     {
-        perror("Cannot convert string to integer");
+        fprintf(stderr, "Group size cannot be negative\n");
+        return -1;
     }
-    int descriptor;
-    if ((descriptor = open(argv[1], O_RDONLY)) != -1)
+    FILE *file;
+    if ((file = fopen(argv[1], "r")) == NULL) 
     {
-        FILE *file;
-        if ((file = fdopen(descriptor, "r")) != NULL)
+        perror("Cannot open file\n");
+        return -1;
+    }
+
+    int eof = 1;
+    int counter;
+    while (eof != EOF) 
+    {
+        counter = 0;
+        do 
         {
-            int symb;
-            do
-            {
-                symb = PrintBlock(file, linesCount);
-                if (putc('\n', stdout) == EOF)
-                {
-                    perror("Cannot put char into stdout");
-                    return EOF;
-                }
-            }
-            while (symb != EOF && symb != StopSymb);
-        }
-        else
+            eof = PrintStr(file, stdout);
+        } 
+        while (eof != EOF && ++counter != groupSize);
+        if (eof != EOF) 
         {
-            perror("Cannot open file");
+            while (getchar() != '\n');
         }
     }
-    else
+    
+    if (fclose(file) == EOF) 
     {
-        perror("Cannot get file descriptor");
+        perror("Cannot close file\n");
+        return -1;
     }
+
+    return 0;
 }

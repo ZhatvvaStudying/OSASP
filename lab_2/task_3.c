@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        perror("Error, invalid operands count!\nOnly file name must be passed\n");
+        fprintf(stderr, "Error, invalid operands count!\nOnly file name must be passed\n");
         return 0;
     }
     int descriptor;
