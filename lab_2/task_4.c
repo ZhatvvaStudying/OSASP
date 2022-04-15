@@ -29,7 +29,7 @@ long ParseLong(const char *str, bool *isError)
     long val = strtol(str, &error, 0);
     if (error == str || *error != '\0' || ((val == LONG_MIN || val == LONG_MAX) && errno == ERANGE))
     {
-        fprintf(stderr, "Could not convert '%s' to long or value is out of range", str;
+        fprintf(stderr, "Could not convert '%s' to long or value is out of range", str);
         *isError = true;
     }
     else
