@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     }
     if ((outputFile = fopen(outputFileName, "w")) == NULL) 
     {
-        perror("Cannot open output\n");
+        perror("Cannot open output file\n");
         return -1;
     }
 
