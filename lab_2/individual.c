@@ -48,7 +48,7 @@ long long GetDirSize(char* dirName, long capacity)
                     }
                     else
                     {
-                        perror("Cannot get stats for ");
+                        perror("Cannot get stats");
                     }
                 }
             }
@@ -63,10 +63,8 @@ long long GetDirSize(char* dirName, long capacity)
 }
 
 
-int main(int argc, char* argv[]) {
-
-	argv[1] = ".";
-    argc = 2;
+int main(int argc, char* argv[]) 
+{
     if (argc != 2) 
     {
 		fprintf(stderr,"Error! Invalid operands count!\n\t1 - directory name");

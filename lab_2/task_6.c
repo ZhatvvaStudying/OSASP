@@ -15,7 +15,7 @@ int PrintDirectory(const char *directoryName)
     struct dirent *dirent;
     while ((dirent = readdir(directory)) != NULL) 
     {
-        if (dirent->d_name != "." && dirent->d_name != "..")
+        if (strcmp(dirent->d_name, ".") != 0 && strcmp(dirent->d_name, "..") != 0)
         {
             printf("\t%s\n", dirent->d_name);
         }
