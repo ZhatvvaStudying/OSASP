@@ -36,19 +36,19 @@ int main(int argc, char *argv[])
     }
     if ((outputFile = fopen(outputFileName, "w")) == NULL) 
     {
-        perror("Cannot open output\n");
+        perror("Cannot open output file\n");
         return -1;
     }
 
-    struct stat rights;
+    struct stat buf;
     
-    if (stat(inputFileName, &rights)) 
+    if (stat(inputFileName, &buf)) 
     {
         perror("Cannot access input file information\n");
         CloseFiles(inputFile, outputFile);
         return -1;
     }
-    if (chmod(outputFileName, rights.st_mode)) 
+    if (chmod(outputFileName, buf.st_mode)) 
     {
         perror("Cannot give access right to input file\n");
         CloseFiles(inputFile, outputFile);
