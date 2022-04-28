@@ -11,3 +11,6 @@
   <p>task_5.c - copy content and access rights from one file to another</p>
   <p>task_6.c - get current directory and root directory contet</p>
   <p>individual.c - variant 8</p>
+<h2>lab_3</h2>
+  <p>get_time.c - create two child processes and print current time</p> 
+  <p>individual_var3.c - compare files in two directories</p>
